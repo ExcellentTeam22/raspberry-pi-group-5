@@ -49,7 +49,7 @@ while cap.isOpened ():
         if direction == 0: # up form
             #if per == 0:
 
-            if 100 < hip < 160 and 150 < left_elbow < 180 and 20 < left_shoulder < 50:
+            if 100 < hip < 160 and 150 < left_elbow < 180 and 20 < left_shoulder < 70:
                 feedback = "Up"
                 if direction == 0:
                     count += 0.5
