@@ -9,7 +9,7 @@ cap = cv2.VideoCapture (0)
 detector = pm.poseDetector ()
 mp_pose = mp.solutions.pose
 count = 0
-direction = 0
+direction = 1
 form = 0
 feedback = "Fix Form"
 
@@ -31,10 +31,9 @@ while cap.isOpened ():
                               mp_pose.PoseLandmark.RIGHT_WRIST)
         hip = detector.findAngle (img, 11, 23, 25)
 
-        right_sholder = detector.findAngle(img,14,12,24)
+        right_shoulder = detector.findAngle(img,14,12,24)
 
-        left_sholder = detector.findAngle(img,13,11,23)
-
+        left_shoulder = detector.findAngle(img,13,11,23)
 
         # Percentage of success of pushup
         #per = np.interp (elbow, (90, 160), (0, 100))
@@ -43,48 +42,71 @@ while cap.isOpened ():
         #bar = np.interp (elbow, (90, 160), (380, 50))
 
         # Check to ensure right form before starting the program
-        if hip > 140 and left_elbow > 140 and right_elbow > 140:
-            direction = 1
+        start = datetime.now().time()
 
-        else:
-            feedback = "Fix Form"
 
         # Check for full range of motion for the pushup
         if direction == 0: # up form
             #if per == 0:
-            if left_elbow <= 110 and right_elbow <= 110 and hip <= 125:
-                start = datetime.now().time()
+
+            if 100 < hip < 160 and 150 < left_elbow < 180 and 20 < left_shoulder < 50:
                 feedback = "Up"
                 if direction == 0:
                     count += 0.5
                     direction = 1
             else:
                 end = datetime.now().time()
-                if end - start > 3:
-                    if left_elbow > 110:
-                        feedback = "Fix Form elbow to 110"
-                    elif hip > 125:
-                        feedback = "Fix Form hip to 125"
+
+                print("s: ",start)
+                print("e: ",end)
+                print("e-s : ",end.second - start.second)
+
+                if end.second - start.second > 3:
+                    if not 150 < left_elbow < 180:
+                        print(1)
+                        feedback = "150 < elbow < 180"
+                    elif not 100 < hip < 160:
+                        print(2)
+                        feedback = "100 < hip < 160"
+                    elif not 20 < left_shoulder < 50:
+                        print(3)
+                        feedback = "20 < shoulder < 50"
                     else:
+                        # print(4)
                         feedback = "Fix Form"
 
             #if per == 100:
         if direction == 1: # down form
-            if hip > 140 and left_elbow > 140 and right_elbow > 140:
+            if 100 < hip < 160 and 80 < left_elbow < 110 and 80 < left_shoulder < 110:
+
                 feedback = "Down"
                 if direction == 1:
                     count += 0.5
                     direction = 0
-            else:
-                if left_elbow <= 140:
-                    feedback = "Fix Form elbow to 140"
-                elif hip <= 140:
-                    feedback = "Fix Form hip to 140"
-                else:
-                    feedback = "Fix Form"
-                # form = 0
 
-        print (count)
+            else:
+                end = datetime.now().time()
+
+                print("s: ", start)
+                print("e: ", end)
+                print("e-s : ", end.second - start.second)
+
+                if end.second - start.second > 3:
+                    if not 80 < left_elbow < 110:
+                        print(5)
+                        feedback = "80 < left_elbow < 110"
+                    elif not 100 < hip < 160:
+                        print(6)
+                        feedback = "100 < hip < 160"
+                    elif not 80 < left_shoulder < 110:
+                        print(7)
+                        feedback = "80 < left_shoulder < 110"
+                    else:
+                        # print(8)
+                        feedback = "Fix Form"
+                    # form = 0
+
+        # print (count)
 
         # Draw Bar
         if form == 1:
@@ -100,7 +122,7 @@ while cap.isOpened ():
 
         # Feedback
         cv2.rectangle (img, (500, 0), (640, 40), (255, 255, 255), cv2.FILLED)
-        cv2.putText (img, feedback, (500, 40), cv2.FONT_HERSHEY_PLAIN, 2,
+        cv2.putText (img, feedback, (100, 40), cv2.FONT_HERSHEY_PLAIN, 2,
                      (0, 255, 0), 2)
 
     cv2.imshow ('bench dips counter', img)
