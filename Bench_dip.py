@@ -2,7 +2,8 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import PoseModule as pm
-from get_angles import *
+#from get_angles import *
+
 cap = cv2.VideoCapture (0)
 detector = pm.poseDetector ()
 mp_pose = mp.solutions.pose
@@ -23,8 +24,10 @@ while cap.isOpened ():
     # print(lmList)
     if len (lmList) != 0:
 
-        left_elbow = get_left_elbow(img)
-        right_elbow = get_right_elbow(img)
+        left_elbow = detector.findAngle(img, mp_pose.PoseLandmark.LEFT_SHOULDER, mp_pose.PoseLandmark.LEFT_ELBOW,
+                              mp_pose.PoseLandmark.LEFT_WRIST)
+        right_elbow = detector.findAngle(img, mp_pose.PoseLandmark.RIGHT_SHOULDER, mp_pose.PoseLandmark.RIGHT_ELBOW,
+                              mp_pose.PoseLandmark.RIGHT_WRIST)
         hip = detector.findAngle (img, 11, 23, 25)
 
 
@@ -35,13 +38,13 @@ while cap.isOpened ():
         #bar = np.interp (elbow, (90, 160), (380, 50))
 
         # Check to ensure right form before starting the program
-        if hip > 140 and left_elbow > 160 and right_elbow > 160:
+        if hip > 120 and left_elbow > 150 and right_elbow > 150:
             form = 1
 
         # Check for full range of motion for the pushup
         if form == 1:
             #if per == 0:
-                if left_elbow <= 100 and right_elbow <= 100 and hip <= 100:
+                if left_elbow <= 110 and right_elbow <= 110 and hip <= 110:
                     feedback = "Up"
                     if direction == 0:
                         count += 0.5
@@ -50,7 +53,7 @@ while cap.isOpened ():
                     feedback = "Fix Form"
 
             #if per == 100:
-                if left_elbow > 160 and right_elbow > 160 and hip > 140:
+                if left_elbow > 150 and right_elbow > 150 and hip > 120:
                     feedback = "Down"
                     if direction == 1:
                         count += 0.5
