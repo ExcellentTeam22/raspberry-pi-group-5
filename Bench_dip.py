@@ -12,6 +12,7 @@ count = 0
 direction = 1
 form = 0
 feedback = "Fix Form"
+counter = 0
 
 while cap.isOpened ():
     ret, img = cap.read ()  # 640 x 480
@@ -44,7 +45,6 @@ while cap.isOpened ():
         # Check to ensure right form before starting the program
         start = datetime.now().time()
 
-
         # Check for full range of motion for the pushup
         if direction == 0: # up form
             #if per == 0:
@@ -56,12 +56,12 @@ while cap.isOpened ():
                     direction = 1
             else:
                 end = datetime.now().time()
+                if counter % 30 == 0:
+                    counter =1
+                    print("s: ",start)
+                    print("e: ",end)
+                    print("e-s : ",end.second - start.second)
 
-                print("s: ",start)
-                print("e: ",end)
-                print("e-s : ",end.second - start.second)
-
-                if end.second - start.second > 3:
                     if not 150 < left_elbow < 180:
                         print(1)
                         feedback = "150 < elbow < 180"
@@ -85,26 +85,27 @@ while cap.isOpened ():
                     direction = 0
 
             else:
+                if counter % 30 == 0:
+                    counter =1
                 end = datetime.now().time()
 
                 print("s: ", start)
                 print("e: ", end)
                 print("e-s : ", end.second - start.second)
 
-                if end.second - start.second > 3:
-                    if not 80 < left_elbow < 110:
-                        print(5)
-                        feedback = "80 < left_elbow < 110"
-                    elif not 100 < hip < 160:
-                        print(6)
-                        feedback = "100 < hip < 160"
-                    elif not 80 < left_shoulder < 110:
-                        print(7)
-                        feedback = "80 < left_shoulder < 110"
-                    else:
-                        # print(8)
-                        feedback = "Fix Form"
-                    # form = 0
+                if not 80 < left_elbow < 110:
+                    print(5)
+                    feedback = "80 < left_elbow < 110"
+                elif not 100 < hip < 160:
+                    print(6)
+                    feedback = "100 < hip < 160"
+                elif not 80 < left_shoulder < 110:
+                    print(7)
+                    feedback = "80 < left_shoulder < 110"
+                else:
+                    # print(8)
+                    feedback = "Fix Form"
+                # form = 0
 
         # print (count)
 
@@ -124,6 +125,7 @@ while cap.isOpened ():
         cv2.rectangle (img, (500, 0), (640, 40), (255, 255, 255), cv2.FILLED)
         cv2.putText (img, feedback, (100, 40), cv2.FONT_HERSHEY_PLAIN, 2,
                      (0, 255, 0), 2)
+        counter+=1
 
     cv2.imshow ('bench dips counter', img)
     if cv2.waitKey (10) & 0xFF == ord ('q'):
