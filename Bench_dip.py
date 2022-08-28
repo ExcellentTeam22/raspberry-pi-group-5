@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import PoseModule as pm
+from datetime import datetime
 #from get_angles import *
 
 cap = cv2.VideoCapture (0)
@@ -23,12 +24,16 @@ while cap.isOpened ():
     lmList = detector.findPosition (img, False)
     # print(lmList)
     if len (lmList) != 0:
-
+        form = 0
         left_elbow = detector.findAngle(img, mp_pose.PoseLandmark.LEFT_SHOULDER, mp_pose.PoseLandmark.LEFT_ELBOW,
                               mp_pose.PoseLandmark.LEFT_WRIST)
         right_elbow = detector.findAngle(img, mp_pose.PoseLandmark.RIGHT_SHOULDER, mp_pose.PoseLandmark.RIGHT_ELBOW,
                               mp_pose.PoseLandmark.RIGHT_WRIST)
         hip = detector.findAngle (img, 11, 23, 25)
+
+        right_sholder = detector.findAngle(img,14,12,24)
+
+        left_sholder = detector.findAngle(img,13,11,23)
 
 
         # Percentage of success of pushup
@@ -38,29 +43,46 @@ while cap.isOpened ():
         #bar = np.interp (elbow, (90, 160), (380, 50))
 
         # Check to ensure right form before starting the program
-        if hip > 120 and left_elbow > 150 and right_elbow > 150:
-            form = 1
+        if hip > 140 and left_elbow > 140 and right_elbow > 140:
+            direction = 1
+
+        else:
+            feedback = "Fix Form"
 
         # Check for full range of motion for the pushup
-        if form == 1:
+        if direction == 0: # up form
             #if per == 0:
-                if left_elbow <= 110 and right_elbow <= 110 and hip <= 110:
-                    feedback = "Up"
-                    if direction == 0:
-                        count += 0.5
-                        direction = 1
-                else:
-                    feedback = "Fix Form"
+            if left_elbow <= 110 and right_elbow <= 110 and hip <= 125:
+                start = datetime.now().time()
+                feedback = "Up"
+                if direction == 0:
+                    count += 0.5
+                    direction = 1
+            else:
+                end = datetime.now().time()
+                if end - start > 3:
+                    if left_elbow > 110:
+                        feedback = "Fix Form elbow to 110"
+                    elif hip > 125:
+                        feedback = "Fix Form hip to 125"
+                    else:
+                        feedback = "Fix Form"
 
             #if per == 100:
-                if left_elbow > 150 and right_elbow > 150 and hip > 120:
-                    feedback = "Down"
-                    if direction == 1:
-                        count += 0.5
-                        direction = 0
+        if direction == 1: # down form
+            if hip > 140 and left_elbow > 140 and right_elbow > 140:
+                feedback = "Down"
+                if direction == 1:
+                    count += 0.5
+                    direction = 0
+            else:
+                if left_elbow <= 140:
+                    feedback = "Fix Form elbow to 140"
+                elif hip <= 140:
+                    feedback = "Fix Form hip to 140"
                 else:
                     feedback = "Fix Form"
-                    # form = 0
+                # form = 0
 
         print (count)
 
