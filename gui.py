@@ -1,12 +1,28 @@
-from flask import Flask, Response
+from flask import Flask, Response, render_template, request
 import push_up
+
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    return "Default Message"
+    return render_template("index.html")
 
+
+@app.route('/push_up', methods=['POST'])
+def push_up():
+    data = request.form
+    sets = int(data["sets"])
+    repeats = int(data["repeats"])
+    return "push_up"
+
+
+@app.route('/beench_dips', methods=['POST'])
+def beench_dips():
+    data = request.form
+    sets = int(data["sets"])
+    repeats = int(data["repeats"])
+    return "beench_dips"
 
 def gen():
     exercise = push_up.PushUp()
