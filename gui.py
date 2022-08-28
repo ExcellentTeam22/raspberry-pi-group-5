@@ -10,19 +10,19 @@ def index():
     return "Default Message"
 
 
-def gen(video):
+def gen():
+    exercise = push_up.PushUp()
     while True:
-        frame = push_up.push_ups()
-        while frame is None:
-            frame = push_up.push_ups()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+        frame = exercise.push_ups()
+        if frame is not None:
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 
 @app.route('/video_feed')
 def video_feed():
-    global Video
-    return Response(gen(push_up.push_ups()),
+    return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
