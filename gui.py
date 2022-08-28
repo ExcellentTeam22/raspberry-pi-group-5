@@ -1,7 +1,5 @@
 from flask import Flask, Response
-import cv2
 import push_up
-
 app = Flask(__name__)
 
 
