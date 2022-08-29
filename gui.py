@@ -25,10 +25,17 @@ def beench_dips():
     return "beench_dips"
 
 
+@app.route('/squat', methods=['POST'])
+def squat():
+    data = request.form
+    sets = int(data["sets"])
+    repeats = int(data["repeats"])
+    return "squat"
+
+
 def gen():
     exercise = push_up_module.PushUp()
     while True:
-
         frame = exercise.push_ups()
         if frame is not None:
             yield (b'--frame\r\n'

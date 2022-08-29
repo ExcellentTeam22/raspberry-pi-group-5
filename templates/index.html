@@ -65,7 +65,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="beenchDipsModalLabel">Please choose configurations</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
                         </div>
                         <form action="{{ url_for('beench_dips') }}" method="POST">
                             <div class="modal-body">
@@ -84,7 +84,32 @@
             </div>
         </div>
         <div class="col">
-            <img src="{{url_for('static', filename='squat.png')}}" class="img-fluid" alt="push-ups"/>
+            <button type="button" class="btn bg-transparent" data-bs-toggle="modal" data-bs-target="#squatModal">
+                <img src="{{url_for('static', filename='squat.png')}}" class="img-fluid" alt="squat"/>
+            </button>
+                        <div class="modal fade" id="squatModal" tabindex="-1" aria-labelledby="squatModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="squatModalLabel">Please choose configurations</h5>
+                        </div>
+                        <form action="{{ url_for('squat') }}" method="POST">
+                            <div class="modal-body">
+                                <label for="squatSets">Sets:</label><br>
+                                <input type="number" id="squatSets" name="sets" min="0"><br>
+                                <label for="squatRepeats">Repeats:</label><br>
+                                <input type="number" id="squatRepeats" name="repeats" min="0">
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Start" class="btn btn-primary">
+                                <input type="reset" value="Close" class="btn btn-secondary" data-bs-dismiss="modal">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
