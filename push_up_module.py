@@ -2,23 +2,13 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import PoseModule as pm
+from exercise import exercise
 
 
 # cap = cv2.VideoCapture(0)
 
-class PushUp(object):
-    def __init__(self):
-        self.cap = cv2.VideoCapture(0)
-        self.detector = pm.poseDetector()
-        self.count = 0
-        self.direction = 0
-        self.form = 0
-        self.feedback = "Fix Form"
-
-    def __del__(self):
-        self.cap.release()
-
-    def push_ups(self):
+class PushUp(exercise):
+    def start_exercise(self, sets: int, occurrences: int):
         ret, img = self.cap.read()  # 640 x 480
         # Determine dimensions of video - Help with creation of box in Line 43
         width = self.cap.get(3)  # float `width`
@@ -84,9 +74,3 @@ class PushUp(object):
                         (0, 255, 0), 2)
             ret, jpeg = cv2.imencode('.jpg', img)
             return jpeg.tobytes()
-    # cv2.imshow('Pushup counter', img)
-    # if cv2.waitKey(10) & 0xFF == ord('q'):
-    #     break
-
-# cap.release()
-# cv2.destroyAllWindows()

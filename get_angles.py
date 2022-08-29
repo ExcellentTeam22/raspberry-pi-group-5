@@ -10,7 +10,6 @@ def get_left_elbow(img):
     return detector.findAngle(img, mp_pose.PoseLandmark.LEFT_SHOULDER, mp_pose.PoseLandmark.LEFT_ELBOW,
                               mp_pose.PoseLandmark.LEFT_WRIST)
 
-
 def get_right_elbow(img):
     return detector.findAngle(img, mp_pose.PoseLandmark.RIGHT_SHOULDER, mp_pose.PoseLandmark.RIGHT_ELBOW,
                               mp_pose.PoseLandmark.RIGHT_WRIST)
