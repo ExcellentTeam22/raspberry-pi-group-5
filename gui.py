@@ -1,7 +1,6 @@
 from flask import Flask, Response, render_template, request
 
-import bench_dip_module
-import push_up_module
+from exercises import push_up_module, bench_dip_module, squat_module
 
 app = Flask(__name__)
 
@@ -32,7 +31,7 @@ def squat():
     data = request.form
     sets = int(data["sets"])
     repeats = int(data["repeats"])
-    return "squat"
+    return render_template("squat.html")
 
 
 def gen(module):
@@ -57,11 +56,12 @@ def bench_dips_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-# @app.route('/video_feed')
-# def video_feed():
-#     return Response(gen(),
-#                     mimetype='multipart/x-mixed-replace; boundary=frame')
-#
+@app.route('/squat_feed')
+def squat_feed():
+    squat_mod = squat_module.squat()
+    return Response(gen(squat_mod),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=2204, threaded=True)
