@@ -15,7 +15,7 @@ mp_pose = mp.solutions.pose
 # feedback = "Fix Form"
 
 class squat(exercise):
-    def start_exercise(self, sets: int, occurrences: int):
+    def start_exercise(self):
         ret, img = self.cap.read()  # 640 x 480
         # Determine dimensions of video - Help with creation of box in Line 43
         width = self.cap.get(3)  # float `width`

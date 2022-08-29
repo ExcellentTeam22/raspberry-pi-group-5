@@ -15,7 +15,7 @@ def push_up():
     data = request.form
     sets = int(data["sets"])
     repeats = int(data["repeats"])
-    return render_template("push_up.html")
+    return render_template("exercise.html", address="push_up_feed")
 
 
 @app.route('/bench_dips', methods=['POST'])
@@ -23,7 +23,7 @@ def bench_dips():
     data = request.form
     sets = int(data["sets"])
     repeats = int(data["repeats"])
-    return render_template("bench_dips.html")
+    return render_template("exercise.html", address="bench_dips_feed")
 
 
 @app.route('/squat', methods=['POST'])
@@ -31,12 +31,12 @@ def squat():
     data = request.form
     sets = int(data["sets"])
     repeats = int(data["repeats"])
-    return render_template("squat.html")
+    return render_template("exercise.html", address="squat")
 
 
 def gen(module):
     while True:
-        frame = module.start_exercise(0, 0)
+        frame = module.start_exercise()
         if frame is not None:
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')

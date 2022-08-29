@@ -17,5 +17,5 @@ class exercise(ABC):
         self.cap.release()
 
     @abstractmethod
-    def start_exercise(self, sets: int, occurrences: int):
+    def start_exercise(self):
         pass
