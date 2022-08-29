@@ -1,5 +1,5 @@
 from flask import Flask, Response, render_template, request
-import push_up
+import push_up_module
 
 app = Flask(__name__)
 
@@ -24,8 +24,9 @@ def beench_dips():
     repeats = int(data["repeats"])
     return "beench_dips"
 
+
 def gen():
-    exercise = push_up.PushUp()
+    exercise = push_up_module.PushUp()
     while True:
 
         frame = exercise.push_ups()

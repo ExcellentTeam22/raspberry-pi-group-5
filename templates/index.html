@@ -38,19 +38,18 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="pushUpModalLabel">Please choose configurations</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                            <form action="{{ url_for('push_up') }}" method="POST">
-                        <div class="modal-body">
+                        <form action="{{ url_for('push_up') }}" method="POST">
+                            <div class="modal-body">
                                 <label for="pushUpsSets">Sets:</label><br>
                                 <input type="number" id="pushUpsSets" name="sets" min="0"><br>
                                 <label for="pushUpsRepeats">Repeats:</label><br>
                                 <input type="number" id="pushUpsRepeats" name="repeats" min="0">
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" value="Start" class="btn btn-primary">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Start" class="btn btn-primary">
+                                <input type="reset" value="Close" class="btn btn-secondary" data-bs-dismiss="modal">
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -77,7 +76,7 @@
                             </div>
                             <div class="modal-footer">
                                 <input type="submit" value="Start" class="btn btn-primary">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input type="reset" value="Close" class="btn btn-secondary" data-bs-dismiss="modal">
                             </div>
                         </form>
                     </div>
