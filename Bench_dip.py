@@ -15,7 +15,7 @@ feedback = "Fix Form"
 counter = 0
 
 while cap.isOpened ():
-    ret, img = cap.read ()  # 640 x 480
+    ret, img = cap.read()  # 640 x 480
     # Determine dimensions of video - Help with creation of box in Line 43
     width = cap.get (3)  # float `width`
     height = cap.get (4)  # float `height`
@@ -46,10 +46,11 @@ while cap.isOpened ():
         start = datetime.now().time()
 
         # Check for full range of motion for the pushup
-        if direction == 0: # up form
-            #if per == 0:
-
-            if 100 < hip < 160 and 150 < left_elbow < 180 and 20 < left_shoulder < 70:
+        if direction == 0:# up form
+            if counter % 10 == 0:
+                feedback = "Up"
+            # if per == 0:
+            if 90 < hip < 160 and 150 < left_elbow < 190 and 20 < left_shoulder < 70:
                 feedback = "Up"
                 if direction == 0:
                     count += 0.5
@@ -57,27 +58,29 @@ while cap.isOpened ():
             else:
                 end = datetime.now().time()
                 if counter % 30 == 0:
-                    counter =1
-                    print("s: ",start)
-                    print("e: ",end)
-                    print("e-s : ",end.second - start.second)
+                    counter = 1
+                    # print("s: ", start)
+                    # print("e: ", end)
+                    # print("e-s : ", end.second - start.second)
 
                     if not 150 < left_elbow < 180:
                         print(1)
                         feedback = "150 < elbow < 180"
-                    elif not 100 < hip < 160:
+                    elif not 90 < hip < 160:
                         print(2)
-                        feedback = "100 < hip < 160"
+                        feedback = "90 < hip < 160"
                     elif not 20 < left_shoulder < 50:
                         print(3)
                         feedback = "20 < shoulder < 50"
                     else:
-                        # print(4)
+                        print(4)
                         feedback = "Fix Form"
 
             #if per == 100:
         if direction == 1: # down form
-            if 100 < hip < 160 and 80 < left_elbow < 110 and 80 < left_shoulder < 110:
+            if counter % 10 == 0:
+                feedback = "Down"
+            if 90 < hip < 160 and 80 < left_elbow < 110 and 80 < left_shoulder < 110:
 
                 feedback = "Down"
                 if direction == 1:
@@ -86,12 +89,12 @@ while cap.isOpened ():
 
             else:
                 if counter % 30 == 0:
-                    counter =1
+                    counter = 1
                 end = datetime.now().time()
 
-                print("s: ", start)
-                print("e: ", end)
-                print("e-s : ", end.second - start.second)
+                # print("s: ", start)
+                # print("e: ", end)
+                # print("e-s : ", end.second - start.second)
 
                 if not 80 < left_elbow < 110:
                     print(5)
@@ -103,7 +106,7 @@ while cap.isOpened ():
                     print(7)
                     feedback = "80 < left_shoulder < 110"
                 else:
-                    # print(8)
+                    print(8)
                     feedback = "Fix Form"
                 # form = 0
 
@@ -127,9 +130,10 @@ while cap.isOpened ():
                      (0, 255, 0), 2)
         counter+=1
 
+
     cv2.imshow ('bench dips counter', img)
     if cv2.waitKey (10) & 0xFF == ord ('q'):
         break
 
 cap.release ()
-cv2.destroyAllWindows ()
+cv2.destroyAllWindows()
