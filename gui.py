@@ -1,11 +1,8 @@
-import waitress
 from flask import Flask, Response, render_template, request
 
-import config
 from exercises import push_up_module, bench_dip_module, squat_module
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = config.SECRET_KEY
 
 @app.route('/')
 def index():
@@ -66,4 +63,4 @@ def squat_feed():
 
 
 if __name__ == '__main__':
-    waitress.serve(app, port="2204")
+    app.run(host='0.0.0.0', port=2204, threaded=True)
