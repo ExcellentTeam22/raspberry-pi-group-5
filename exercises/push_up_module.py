@@ -1,8 +1,6 @@
 import cv2
-import mediapipe as mp
 import numpy as np
-import PoseModule as pm
-from exercise import exercise
+from exercises.exercise import exercise
 
 
 # cap = cv2.VideoCapture(0)

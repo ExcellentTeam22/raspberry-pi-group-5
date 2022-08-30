@@ -31,7 +31,7 @@ def squat():
     data = request.form
     sets = int(data["sets"])
     repeats = int(data["repeats"])
-    return render_template("exercise.html", address="squat")
+    return render_template("exercise.html", address="squat_feed")
 
 
 def gen(module):

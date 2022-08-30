@@ -1,8 +1,7 @@
 import cv2
 import mediapipe as mp
-import numpy as np
-import PoseModule as pm
-from exercise import exercise
+
+from exercises.exercise import exercise
 
 # cap = cv2.VideoCapture (0)
 # detector = pm.poseDetector ()
@@ -43,10 +42,10 @@ class squat(exercise):
 
             # Check to ensure right form before starting the program
             if hip > 170 and left_knee > 160 and right_knee > 160:
-                form = 1
+                self.form = 1
 
             # Check for full range of motion for the pushup
-            if form == 1:
+            if self.form == 1:
                 # if per == 0:
                 if left_knee <= 80 and right_knee <= 80 and hip <= 75:
                     self.feedback = "Up"
@@ -69,7 +68,7 @@ class squat(exercise):
             print(self.count)
 
             # Draw Bar
-            if form == 1:
+            if self.form == 1:
                 cv2.rectangle(img, (580, 50), (600, 380), (0, 255, 0), 3)
                 # cv2.rectangle (img, (580, int (bar)), (600, 380), (0, 255, 0), cv2.FILLED)
                 # cv2.putText (img, f'{int (per)}%', (565, 430), cv2.FONT_HERSHEY_PLAIN, 2,

@@ -2,7 +2,7 @@ from datetime import datetime
 
 import cv2
 
-from exercise import exercise
+from exercises.exercise import exercise
 
 import mediapipe as mp
 mp_pose = mp.solutions.pose
