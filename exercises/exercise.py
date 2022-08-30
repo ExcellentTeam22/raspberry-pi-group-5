@@ -5,7 +5,7 @@ import PoseModule as pm
 
 
 class exercise(ABC):
-    def __init__(self):
+    def __init__(self, ):
         self.cap = cv2.VideoCapture(0)
         self.detector = pm.poseDetector()
         self.count = 0
